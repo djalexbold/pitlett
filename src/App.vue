@@ -70,7 +70,6 @@
 
 <script>
 import LoginView from "@/views/LoginView.vue";
-import router from "@/router";
 
 export default {
   name: 'App',
