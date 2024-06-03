@@ -1,11 +1,11 @@
 <template>
-<h1>Категории литературы</h1>
+<h1>Мои файлы</h1>
 
 </template>
 
 <script>
 export default {
-  name: 'AboutView',
+  name: 'FilesView',
 
   components: {
 

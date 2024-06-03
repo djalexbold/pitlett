@@ -4,49 +4,63 @@
       fluid
   >
     <v-row dense>
-    <v-col
-        v-for="(dessert, key) in desserts"
-        :key="key"
-        cols="12"
-        md="4"
-    >
-      <v-card
-          class="mx-auto"
-          height="226"
+      <v-col
+          v-for="(dessert, key) in desserts"
+          :key="key"
+          cols="12"
+          md="4"
       >
-        <div class="d-flex flex-no-wrap justify-space-between">
-          <div>
-            <v-card-title class="text-h5">
-              {{ dessert.name }}
-            </v-card-title>
+        <v-card
+            class="mx-auto"
+            height="226"
+        >
+          <div class="d-flex flex-no-wrap justify-space-between">
+            <div>
+              <v-card-title class="text-h5">
+                {{ dessert.name }}
+              </v-card-title>
 
-            <v-card-subtitle>{{ dessert.description }}</v-card-subtitle>
+              <v-card-subtitle>{{ dessert.description }}</v-card-subtitle>
 
-            <v-card-actions>
-              <v-btn small>open</v-btn>
-            </v-card-actions>
+              <v-card-actions>
+                <v-btn small>open</v-btn>
+              </v-card-actions>
 
-            <v-rating
-                v-model="dessert.rating"
-                active-color="yellow-accent-4"
-                color="red"
-                size="18"
-                half-increments
-                hover
-            ></v-rating>
+              <v-rating
+                  v-model="dessert.rating"
+                  active-color="yellow-accent-4"
+                  color="red"
+                  size="18"
+                  half-increments
+                  hover
+              ></v-rating>
+            </div>
+
+            <v-avatar
+                v-if="dessert.images.length !== 0"
+                class="ma-2"
+                rounded="0"
+                size="200"
+            >
+              <v-carousel
+                  v-if=""
+                  :continuous="false"
+                  hide-delimiters
+                  height="200">
+                <v-carousel-item
+                    v-for="(item, i) in dessert.images"
+                    :key="i"
+                    :src="item.src"
+                    cover
+                >
+                </v-carousel-item>
+              </v-carousel>
+
+            </v-avatar>
           </div>
-
-          <v-avatar
-              class="ma-3"
-              rounded="0"
-              size="200"
-          >
-            <v-img cover src="../assets/test_img.jpg"></v-img>
-          </v-avatar>
-        </div>
-      </v-card>
-    </v-col>
-  </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -63,7 +77,11 @@ export default {
         type: 'PDF',
         size: 4520,
         author: 'user123',
-        rating: 4.5
+        rating: 4.5,
+        images: [
+          {src: require('@/assets/test_img.jpg')},
+          {src: require('@/assets/north-polus_09.jpg')}
+        ]
       },
       {
         name: 'Ice cream sandwich',
@@ -72,16 +90,20 @@ export default {
         type: 'PDF',
         size: 386,
         author: 'user123',
-        rating: 4.0
+        rating: 4.0,
+        images: []
       },
       {
         name: 'Eclair',
-        description:'I wish I knew how Caoilinn Hughes has managed to write a book of such depth and gravity that is also so gripping and relentlessly funny.',
+        description: 'I wish I knew how Caoilinn Hughes has managed to write a book of such depth and gravity that is also so gripping and relentlessly funny.',
         category: 'Справочная литература',
         type: 'PDF',
         size: 841,
         author: 'alexbold',
-        rating: 1
+        rating: 1,
+        images: [
+          {src: require('@/assets/test_img.jpg')},
+        ]
       },
       {
         name: 'Cupcake',
@@ -90,7 +112,8 @@ export default {
         type: 'DOC',
         size: 6120,
         author: 'DeveLOP',
-        rating: 3.5
+        rating: 3.5,
+        images: []
       },
       {
         name: 'Bitter Water Opera',
@@ -99,16 +122,13 @@ export default {
         type: 'DjVu',
         size: 12869,
         author: 'DeveLOP',
-        rating: 2
+        rating: 2,
+        images: []
       },
     ],
   }),
-  methods: {
-
-  },
-  computed: {
-
-  }
+  methods: {},
+  computed: {}
 }
 
 

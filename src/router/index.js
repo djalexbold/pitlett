@@ -6,6 +6,7 @@ import LoginView from "@/views/LoginView.vue";
 import AboutView from "@/views/AboutView.vue";
 import CardView from "@/components/card-view.vue";
 import TableView from "@/components/table-view.vue";
+import FilesView from "@/views/FilesView.vue";
 
 Vue.use(VueRouter)
 
@@ -14,8 +15,8 @@ const routes = [
         path: '/',
         name: 'home',
         component: HomeView,
-        icon: 'mdi-cart-variant',
-        label: 'Корзина',
+        icon: 'mdi-file-star-outline',
+        label: 'Избранное',
         tab: true,
         all: true
     },
@@ -41,8 +42,19 @@ const routes = [
         path: '/about',
         name: 'about',
         component: AboutView,
-        icon: 'mdi-file-document-edit-outline',
-        label: 'Спецификации',
+        icon: 'mdi-menu',
+        label: 'Категории',
+        requiresAuth: false,
+        tab: false,
+        all: true
+
+    },
+    {
+        path: '/files',
+        name: 'files',
+        component: FilesView,
+        icon: 'mdi-account-file-text-outline',
+        label: 'Мои файлы',
         requiresAuth: false,
         tab: false,
         all: true

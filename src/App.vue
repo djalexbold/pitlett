@@ -1,11 +1,22 @@
 <template>
   <v-app id="inspire">
     <v-system-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer" small text ></v-app-bar-nav-icon>
+      <v-btn x-small text stacked>
+        <v-badge inline color="error" content="12">
+          <v-icon>mdi-bell-outline</v-icon>
+        </v-badge>
+      </v-btn>
+      <v-btn x-small text stacked>
+        <v-badge inline color="error" content="3">
+          <v-icon>mdi-email-outline</v-icon>
+        </v-badge>
+      </v-btn>
       <v-spacer></v-spacer>
-      <span>выход</span>
+      <span>{{ user.name }}</span>
       <v-icon @click="dialog = true" :disabled="dialog" class="ml-2" color="red">mdi-login</v-icon>
     </v-system-bar>
+
     <v-navigation-drawer
         v-if="$route.name !== 'login' && $route.name !== 'notFound'"
         v-model="drawer"
@@ -29,11 +40,12 @@
 
       </v-sheet>
       <v-divider></v-divider>
-        <v-switch
-            v-model="theme"
-            :prepend-icon="theme ? 'mdi-weather-night' : 'mdi-weather-sunny'"
-        ></v-switch>
+      <v-switch
+          v-model="theme"
+          :prepend-icon="theme ? 'mdi-weather-night' : 'mdi-weather-sunny'"
+      ></v-switch>
       <v-divider></v-divider>
+
       <v-list>
         <v-list-item
             v-for="(route, key) in $router.options.routes.filter(r => r.all)"
@@ -76,9 +88,9 @@ export default {
   components: {LoginView},
 
   data: () => ({
+    breadcrumbPath: [],
     theme: false,
     dialog: false,
-    switch1: false,
     currentTickerIndex: 0,
     intervalId: null,
     drawer: null,
@@ -89,7 +101,7 @@ export default {
   watch: {
     theme(val) {
       this.$vuetify.theme.dark = val
-    }
+    },
   },
   computed: {},
 
@@ -97,6 +109,16 @@ export default {
 
   },
 
-  methods: {}
+  methods: {
+    breadcrumb(router) {
+          router = this.$router.options.routes.filter(r => r.all)
+      return router
+    }
+  }
 };
 </script>
+<style>
+span {
+  padding: 0 2px 0 2px;
+}
+</style>
