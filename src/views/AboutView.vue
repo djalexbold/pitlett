@@ -14,7 +14,6 @@
           v-model="currentItem"
       >
         <v-tab
-
             v-for="item in items"
             :key="item.id"
         >{{ item.title }}
@@ -27,16 +26,14 @@
         <div class="text-cols">
           <v-tab-item
               v-for="subItem in subItems"
+              :key="subItem.id"
               :value="subItem.sub_id - 1"
           >
-
             <v-card @click="" flat>
-              <v-card-text >
+              <v-card-text class="v-card-text">
                 {{ subItem.name }}
               </v-card-text>
             </v-card>
-
-
           </v-tab-item>
         </div>
       </v-tabs-items>
@@ -83,9 +80,14 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
+
+.v-card-text:hover {
+  color: #1976D2;
+}
+
 .text-cols {
-  column-count: 2;
+  column-count: 3;
   column-gap: 10px;
 }
 

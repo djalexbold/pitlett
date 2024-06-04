@@ -3,6 +3,12 @@
       class="py-8 px-6"
       fluid
   >
+    <v-text-field
+        v-model="p.quicksearch"
+        label="Поиск"
+        append-outer-icon="mdi-magnify"
+        clearable dense hide-details
+    />
     <v-row dense>
       <v-col
           v-for="(dessert, key) in desserts"
@@ -55,12 +61,12 @@
                 >
                 </v-carousel-item>
               </v-carousel>
-
             </v-avatar>
           </div>
         </v-card>
       </v-col>
     </v-row>
+    <v-pagination v-model="page" :length="Math.ceil(totalCount/ p.limit)" />
   </v-container>
 </template>
 
@@ -69,6 +75,15 @@ export default {
   name: 'cardView',
 
   data: () => ({
+    p: {
+      start: 0,
+      step: 0,
+      limit: 5,
+    },
+    page: 1,
+    totalCount: 0,
+    quicksearch: undefined,
+    order: undefined,
     desserts: [
       {
         name: 'Frozen Yogurt',
@@ -125,10 +140,42 @@ export default {
         rating: 2,
         images: []
       },
+      {
+        name: 'Bitter Water Opera',
+        description: 'Exuberant and improbable, Bitter Water Opera is a wonder work of noticing.',
+        category: 'Художественная литература',
+        type: 'DjVu',
+        size: 12869,
+        author: 'DeveLOP',
+        rating: 2,
+        images: []
+      },
+      {
+        name: 'Bitter Water Opera',
+        description: 'Exuberant and improbable, Bitter Water Opera is a wonder work of noticing.',
+        category: 'Художественная литература',
+        type: 'DjVu',
+        size: 12869,
+        author: 'DeveLOP',
+        rating: 2,
+        images: []
+      },
     ],
   }),
+
+  computed: {
+    params() {
+      const {order, quicksearch} = this.p
+      return {
+        ...this.p,
+        start: this.p.limit * (this.page - 1),
+        order: order ?? undefined,
+        quicksearch: quicksearch ?? undefined,
+        ...this.$route.query
+      }
+    }
+  },
   methods: {},
-  computed: {}
 }
 
 
