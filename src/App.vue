@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-system-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer" small text ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer" small text></v-app-bar-nav-icon>
       <v-btn x-small text stacked>
         <v-badge inline color="error" content="12">
           <v-icon>mdi-bell-outline</v-icon>
@@ -22,9 +22,7 @@
         v-model="drawer"
         app
     >
-      <v-sheet
-          class="pa-4"
-      >
+      <v-sheet class="pa-4 ma-0">
         <v-avatar
             class="mb-4"
             color="grey darken-1"
@@ -35,15 +33,31 @@
               src="./assets/avatar.jpg"
           ></v-img>
         </v-avatar>
-
-        <div>{{ user.name }}</div>
-
+        <div class="text-overline">{{ user.name }}</div>
       </v-sheet>
       <v-divider></v-divider>
-      <v-switch
-          v-model="theme"
-          :prepend-icon="theme ? 'mdi-weather-night' : 'mdi-weather-sunny'"
-      ></v-switch>
+      <v-row class="align-center mx-lg-1" no-gutters>
+        <v-col>
+          <v-switch
+              v-model="theme"
+              :prepend-icon="theme ? 'mdi-weather-night' : 'mdi-weather-sunny'"
+          ></v-switch>
+        </v-col>
+        <v-col>
+          <v-btn @click="filterContent=0" text stacked>
+            Reset
+            <v-badge
+                inline
+                color="error"
+                v-model="filter"
+                :content="filterContent ? filter = filterContent : filter = false"
+            >
+              <v-icon>mdi-filter-off-outline</v-icon>
+            </v-badge>
+          </v-btn>
+        </v-col>
+      </v-row>
+
       <v-divider></v-divider>
 
       <v-list>
@@ -88,6 +102,8 @@ export default {
   components: {LoginView},
 
   data: () => ({
+    filter: false,
+    filterContent: 3,
     breadcrumbPath: [],
     theme: false,
     dialog: false,
@@ -111,7 +127,7 @@ export default {
 
   methods: {
     breadcrumb(router) {
-          router = this.$router.options.routes.filter(r => r.all)
+      router = this.$router.options.routes.filter(r => r.all)
       return router
     }
   }
