@@ -1,5 +1,6 @@
 <template>
   <v-container>
+
     <v-breadcrumbs :items="breadcrumb">
       <template v-slot:item="{ item }">
         <v-breadcrumbs-item :href="item.id" @click="">
@@ -9,10 +10,8 @@
     </v-breadcrumbs>
 
     <v-card :loading="false" outlined>
-      <v-tabs
-          class="mb-2"
-          v-model="currentItem"
-      >
+
+      <v-tabs v-model="currentItem">
         <v-tab
             v-for="item in items"
             :key="item.id"
@@ -22,20 +21,22 @@
 
       <v-tabs-items
           v-model="currentItem"
+          class="text-cols"
       >
-        <div class="text-cols">
-          <v-tab-item
-              v-for="subItem in subItems"
-              :key="subItem.id"
-              :value="subItem.sub_id - 1"
-          >
-            <v-card @click="" flat>
-              <v-card-text class="v-card-text">
-                {{ subItem.name }}
-              </v-card-text>
-            </v-card>
-          </v-tab-item>
-        </div>
+        <v-tab-item
+            v-for="subItem in subItems"
+            :key="subItem.id"
+            :value="subItem.sub_id - 1"
+        >
+          <div class="mx-lg-2">
+            <v-checkbox
+                dense
+                v-model="selectedCheckbox"
+                :label="subItem.name"
+                :value="subItem.id"
+            />
+          </div>
+        </v-tab-item>
       </v-tabs-items>
 
     </v-card>
@@ -44,10 +45,12 @@
 </template>
 
 <script>
+
 export default {
-  name: 'AboutView',
+  name: 'CategoryView',
   components: {},
   data: () => ({
+    selectedCheckbox: [],
     breadcrumb: [
       {name: '111'},
       {name: '222'},
@@ -75,20 +78,17 @@ export default {
   }),
   methods: {
     addItem(item) {
-      console.log(item)
+      console.log(item.name)
     },
   },
 }
 </script>
 <style scoped>
 
-.v-card-text:hover {
-  color: #1976D2;
-}
-
 .text-cols {
-  column-count: 3;
-  column-gap: 10px;
+  column-count: 4;
+  column-width: auto;
+
 }
 
 </style>

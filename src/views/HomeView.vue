@@ -1,5 +1,5 @@
 <template>
-<h1>Избранное</h1>
+<h1>Кабинет</h1>
 </template>
 
 <script>

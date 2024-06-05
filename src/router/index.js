@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import NotFound from "@/views/NotFound.vue";
 import LoginView from "@/views/LoginView.vue";
-import AboutView from "@/views/AboutView.vue";
+import CategoryView from "@/views/СategoryView.vue";
 import CardView from "@/components/card-view.vue";
 import TableView from "@/components/table-view.vue";
 import FilesView from "@/views/FilesView.vue";
@@ -15,8 +15,8 @@ const routes = [
         path: '/',
         name: 'home',
         component: HomeView,
-        icon: 'mdi-file-star-outline',
-        label: 'Избранное',
+        icon: 'mdi-account-file-text-outline',
+        label: 'Кабинет',
         tab: true,
         all: true
     },
@@ -39,9 +39,9 @@ const routes = [
         all: true
     },
     {
-        path: '/about',
-        name: 'about',
-        component: AboutView,
+        path: '/category',
+        name: 'category',
+        component: CategoryView,
         icon: 'mdi-menu',
         label: 'Категории',
         requiresAuth: false,
@@ -54,7 +54,7 @@ const routes = [
         name: 'files',
         component: FilesView,
         icon: 'mdi-account-file-text-outline',
-        label: 'Мои файлы',
+        label: 'Файлы',
         requiresAuth: false,
         tab: false,
         all: true
