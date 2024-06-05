@@ -6,7 +6,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://pitpdf',
+        target: 'https://pitlett',
         ws: true,
         changeOrigin: true
       }

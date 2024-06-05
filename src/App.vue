@@ -89,7 +89,7 @@
     </v-dialog>
 
     <v-footer app class="bg-grey-lighten-1 justify-center">
-      {{ new Date().getFullYear() }} — <strong> Pitlett </strong>
+      {{ new Date().getFullYear() }} — <strong> pitlett </strong>
     </v-footer>
   </v-app>
 </template>
