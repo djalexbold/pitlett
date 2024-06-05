@@ -1,17 +1,20 @@
 <template>
   <v-container
-      class="py-8 px-6"
+      class="py-6 px-4"
       fluid
   >
+    <v-toolbar class="pd-2" flat>
     <v-text-field
         v-model="p.quicksearch"
         label="Поиск"
-        append-outer-icon="mdi-magnify"
+        prepend-inner-icon="mdi-magnify"
+        style="max-width: 300px;"
         clearable dense hide-details
     />
+    </v-toolbar>
     <v-row dense>
       <v-col
-          v-for="(dessert, key) in desserts"
+          v-for="(document, key) in documents"
           :key="key"
           cols="12"
           md="4"
@@ -27,12 +30,12 @@
                   hide-delimiters
               >
                 <v-carousel-item
-                    v-if="dessert.images?.length"
-                    :src="dessert.images"
+                    v-if="document.images?.length"
+                    :src="document.images"
                     cover
                 >
                   <v-rating
-                      v-model="dessert.rating"
+                      v-model="document.rating"
                       active-color="yellow-accent-4"
                       color="red"
                       size="18"
@@ -46,7 +49,7 @@
                     :src="require('@/assets/No_Image_Available.jpg')"
                 >
                   <v-rating
-                      v-model="dessert.rating"
+                      v-model="document.rating"
                       active-color="yellow-accent-4"
                       color="red"
                       size="18"
@@ -62,8 +65,8 @@
 
                 <v-flex d-flex >
                   <v-card border flat>
-                    <v-card-title>{{ dessert.name }}</v-card-title>
-                    <v-card-text>{{ dessert.description.slice(0, 100) }}</v-card-text>
+                    <v-card-title>{{ document.name }}</v-card-title>
+                    <v-card-text>{{ document.description.slice(0, 100) }}</v-card-text>
                   </v-card>
                 </v-flex>
 
@@ -108,7 +111,7 @@ export default {
     totalCount: 0,
     quicksearch: undefined,
     order: undefined,
-    desserts: [
+    documents: [
       {
         name: 'Frozen Yogurt',
         description: 'Editor’s Pick: With Mother’s Day less than a month away, I found this book to be a timely meditation on modern motherhood. ',

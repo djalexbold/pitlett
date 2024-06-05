@@ -1,8 +1,16 @@
 <template>
-  <v-data-table
-      :headers="headers"
-      :items="desserts"
-  ></v-data-table>
+  <v-container>
+    <v-text-field
+        v-model="p.quicksearch"
+        label="Поиск"
+        append-outer-icon="mdi-magnify"
+        clearable dense hide-details
+    />
+    <v-data-table
+        :headers="headers"
+        :items="documents"
+    ></v-data-table>
+  </v-container>
 </template>
 
 <script>
@@ -10,6 +18,15 @@ export default {
   name: 'tableView',
 
   data: () => ({
+    p: {
+      start: 0,
+      step: 0,
+      limit: 5,
+    },
+    page: 1,
+    totalCount: 0,
+    quicksearch: undefined,
+    order: undefined,
     headers: [
       {text: 'Название', value: 'name'},
       {text: 'Описание', value: 'description'},
@@ -19,7 +36,7 @@ export default {
       {text: 'Размер(KB)', value: 'size'},
       {text: 'Автор', value: 'author'},
     ],
-    desserts: [
+    documents: [
       {
         name: 'Frozen Yogurt',
         description: 'Editor’s Pick: With Mother’s Day less than a month away, I found this book to be a timely meditation on modern motherhood. ',
@@ -40,7 +57,7 @@ export default {
       },
       {
         name: 'Eclair',
-        description:'I wish I knew how Caoilinn Hughes has managed to write a book of such depth and gravity that is also so gripping and relentlessly funny.',
+        description: 'I wish I knew how Caoilinn Hughes has managed to write a book of such depth and gravity that is also so gripping and relentlessly funny.',
         category: 'Справочная литература',
         type: 'PDF',
         size: 841,
@@ -67,12 +84,19 @@ export default {
       },
     ],
   }),
-  methods: {
-
-  },
+  methods: {},
   computed: {
-
-  }
+    params() {
+      const {order, quicksearch} = this.p
+      return {
+        ...this.p,
+        start: this.p.limit * (this.page - 1),
+        order: order ?? undefined,
+        quicksearch: quicksearch ?? undefined,
+        ...this.$route.query
+      }
+    }
+  },
 }
 </script>
 
