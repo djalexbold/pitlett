@@ -8,23 +8,42 @@
         outlined
     >
       <h4 class="text-h5 font-weight-bold mb-4">Избранное</h4>
-
-      <v-text-field
-          v-model="search"
-          density="compact"
-          placeholder="Поиск"
-          prepend-inner-icon="mdi-magnify"
-          style="max-width: 300px;"
-          variant="solo"
-          dense
-      ></v-text-field>
-
+      <div class="d-flex">
+        <v-row align="center">
+          <v-col cols="2" class="pa-2 ma-2">
+            <v-text-field
+                v-model="search"
+                density="compact"
+                placeholder="Поиск"
+                prepend-inner-icon="mdi-magnify"
+                style="max-width: 300px;"
+                variant="solo"
+                dense
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-combobox
+                v-model="filterModel"
+                :hide-no-data="false"
+                label="фильтр"
+                @change="onChange"
+                item-text="label"
+                item-value="id"
+                :items="filterItems"
+                style="max-width: 250px;"
+                return-object
+                dense
+            ></v-combobox>
+          </v-col>
+        </v-row>
+      </div>
       <v-data-iterator
           :items-per-page="itemsPerPage"
           :loading="true"
           :items="documents"
           :search="search"
           :footer-props="footer_props"
+          :custom-sort="customSort"
 
       >
         <template v-slot:default="{ items }">
@@ -77,21 +96,40 @@
         </template>
       </v-data-iterator>
     </v-sheet>
+
     <br>
+
     <v-sheet
         class="pa-2 mx-auto"
         outlined
     >
       <h4 class="text-h5 font-weight-bold mb-4">Мои файлы</h4>
-      <v-text-field
-          v-model="search2"
-          density="compact"
-          placeholder="Поиск"
-          prepend-inner-icon="mdi-magnify"
-          style="max-width: 300px;"
-          variant="solo"
-          dense
-      ></v-text-field>
+      <v-row align="center">
+        <v-col cols="2" class="pa-2 ma-2">
+          <v-text-field
+              v-model="search2"
+              density="compact"
+              placeholder="Поиск"
+              prepend-inner-icon="mdi-magnify"
+              style="max-width: 300px;"
+              variant="solo"
+              dense
+          />
+        </v-col>
+        <v-col>
+          <div class="d-flex mx-2">
+            <v-file-input
+                type="file"
+                accept=".pdf, .djvu, .doc"
+                placeholder="Выберите файл"
+                style="max-width: 250px; white-space: nowrap;"
+                dense
+            />
+            <v-btn @click="">Загрузить</v-btn>
+          </div>
+        </v-col>
+      </v-row>
+
       <v-data-iterator
           :items="documents"
           :items-per-page="itemsPerPage"
@@ -156,12 +194,38 @@
 </template>
 
 <script>
-
+let nextId = 1
 export default {
   name: 'Home',
-
-  computed: {},
   data: () => ({
+    filterItems: [
+      {
+        id: 1,
+        name: 'relevance',
+        label: 'по релевантности',
+      },
+      {
+        id: 2,
+        name: 'rating',
+        label: 'по рейтингу',
+      },
+      {
+        id: 3,
+        name: 'size',
+        label: 'по размеру',
+      },
+      {
+        id: 4,
+        name: 'name',
+        label: 'по имени',
+      },
+      {
+        id: 5,
+        name: 'data',
+        label: 'по дате',
+      },
+    ],
+    filterModel: null,
     footer_props: {
       'items-per-page-options': [],
       'items-per-page-text': null,
@@ -183,7 +247,7 @@ export default {
         images: require('@/assets/test_img.jpg'),
       },
       {
-        name: 'Ice cream sandwich',
+        name: 'yce cream sandwich',
         description: 'Navigating the complexities of bringing another human into the world and exploring today’s medical advances with a pulse',
         category: 'Научная и научно-популярная литература',
         type: 'PDF',
@@ -213,7 +277,7 @@ export default {
         images: require('@/assets/bg.png'),
       },
       {
-        name: 'Bitter Water Opera',
+        name: 'mitter Water Opera',
         description: 'Exuberant and improbable, Bitter Water Opera is a wonder work of noticing.',
         category: 'Художественная литература',
         type: 'DjVu',
@@ -251,10 +315,28 @@ export default {
         rating: 2,
       },
     ],
-
-    items: Array.from({length: 1000}, (k, v) => v + 1),
   }),
+  watch: {
+    filterModel(val) {
+      this.$nextTick(() =>
+          console.log(val)
+      )
+    },
+  },
+  methods:{
+    customSort(items) {
+      items.sort((a, b) => {
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;
+        return 0;
+      })
+      return items;
+    },
 
+    onChange(entry) {
+     //console.log(entry)
+    },
+  },
   components: {},
   filters: {
     toSize(size) {

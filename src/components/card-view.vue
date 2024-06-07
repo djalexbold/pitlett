@@ -11,7 +11,28 @@
         style="max-width: 300px;"
         clearable dense hide-details
     />
+        <v-combobox
+
+            :hide-no-data="false"
+
+            hint="фильтр"
+            label="Add some tags"
+            hide-selected
+            multiple
+            persistent-hint
+            small-chips
+        >
+          <template v-slot:no-data>
+            <v-list-item>
+              <v-list-item-title>
+                No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-combobox>
+
     </v-toolbar>
+
     <v-row dense>
       <v-col
           v-for="(document, key) in documents"
