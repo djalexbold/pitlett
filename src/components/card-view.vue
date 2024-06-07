@@ -66,19 +66,20 @@
                 <v-flex d-flex >
                   <v-card border flat>
                     <v-card-title>{{ document.name }}</v-card-title>
+                    <v-card-subtitle class="primary--text">{{ document.category }}</v-card-subtitle>
                     <v-card-text>{{ document.description.slice(0, 100) }}</v-card-text>
                   </v-card>
                 </v-flex>
 
                 <v-flex d-flex align-self-end>
                   <div class="pl-4">
-                  <v-btn text >
+                  <v-btn small text >
                     <v-icon color="black"> mdi-star-outline</v-icon>
                   </v-btn>
-                  <v-btn text >
+                  <v-btn small text >
                     <v-icon color="black"> mdi-content-save-outline</v-icon>
                   </v-btn>
-                  <v-btn text >
+                  <v-btn small text >
                     <v-icon color="black"> mdi-book-open-outline</v-icon>
                   </v-btn>
                   </div>
@@ -204,6 +205,8 @@ export default {
 </script>
 
 
-<style scoped>
-
+<style>
+.text-color {
+  color: #1976D2;
+}
 </style>

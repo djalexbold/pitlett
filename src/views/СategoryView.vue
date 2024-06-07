@@ -83,12 +83,11 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style>
 
 .text-cols {
   column-count: 4;
   column-width: auto;
-
 }
 
 </style>
