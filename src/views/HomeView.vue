@@ -14,10 +14,9 @@
             <v-text-field
                 v-model="search"
                 density="compact"
-                placeholder="Поиск"
+                label="быстрый поиск"
                 prepend-inner-icon="mdi-magnify"
                 style="max-width: 300px;"
-                variant="solo"
                 dense
             ></v-text-field>
           </v-col>
@@ -78,7 +77,7 @@
                     <strong>{{ item.type }}</strong>,&nbsp; размер: <strong>{{ item.size | toSize }} KB</strong>
                   </v-card-text>
                   <v-card-actions>
-                    <v-btn small text>
+                    <v-btn @click="cardInfo(item)" small text>
                       <v-icon dense> mdi-eye-outline</v-icon>
                     </v-btn>
                     <v-btn small text>
@@ -109,10 +108,9 @@
           <v-text-field
               v-model="search2"
               density="compact"
-              placeholder="Поиск"
+              label="быстрый поиск"
               prepend-inner-icon="mdi-magnify"
               style="max-width: 300px;"
-              variant="solo"
               dense
           />
         </v-col>
@@ -190,14 +188,23 @@
       </v-data-iterator>
     </v-sheet>
 
+    <v-dialog v-model="dialog" width="600">
+      <card-info :add-document="addDoc"/>
+    </v-dialog>
+
   </v-container>
 </template>
 
 <script>
+import CardInfo from "@/components/card-info.vue";
+
 let nextId = 1
 export default {
   name: 'Home',
+  components: {CardInfo},
   data: () => ({
+    addDoc: null,
+    dialog: false,
     filterItems: [
       {
         id: 1,
@@ -323,7 +330,11 @@ export default {
       )
     },
   },
-  methods:{
+  methods: {
+    cardInfo(item) {
+      this.dialog = true
+      this.addDoc = item
+    },
     customSort(items) {
       items.sort((a, b) => {
         if (a.name > b.name) return 1;
@@ -334,10 +345,9 @@ export default {
     },
 
     onChange(entry) {
-     //console.log(entry)
+      //console.log(entry)
     },
   },
-  components: {},
   filters: {
     toSize(size) {
       return size.toLocaleString()

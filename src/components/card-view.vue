@@ -3,35 +3,34 @@
       class="py-6 px-4"
       fluid
   >
-    <v-toolbar class="pd-2" flat>
-    <v-text-field
-        v-model="p.quicksearch"
-        label="Поиск"
-        prepend-inner-icon="mdi-magnify"
-        style="max-width: 300px;"
-        clearable dense hide-details
-    />
-        <v-combobox
-
-            :hide-no-data="false"
-
-            hint="фильтр"
-            label="Add some tags"
-            hide-selected
-            multiple
-            persistent-hint
-            small-chips
-        >
-          <template v-slot:no-data>
-            <v-list-item>
-              <v-list-item-title>
-                No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-              </v-list-item-title>
-            </v-list-item>
-          </template>
-        </v-combobox>
-
-    </v-toolbar>
+    <div class="d-flex">
+      <v-row align="center">
+        <v-col cols="2" class="pa-2 ma-2">
+          <v-text-field
+              v-model="search"
+              :loading="loading"
+              append-outer-icon="mdi-magnify"
+              density="compact"
+              label="поиск"
+              dense
+              @click:append-outer="onClick"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-combobox
+              v-model="filterModel"
+              :hide-no-data="false"
+              label="фильтр"
+              @change="onChange"
+              item-text="label"
+              item-value="id"
+              :items="filterItems"
+              style="max-width: 250px;"
+              dense
+          />
+        </v-col>
+      </v-row>
+    </div>
 
     <v-row dense>
       <v-col
@@ -41,76 +40,76 @@
           md="4"
       >
         <v-sheet outlined>
-        <v-container fluid grid-list-xs>
-          <v-layout row wrap>
+          <v-container fluid grid-list-xs>
+            <v-layout row wrap>
 
-            <v-flex d-flex xs12 sm6>
-              <v-carousel
-                  height="250"
-                  :continuous="false"
-                  hide-delimiters
-              >
-                <v-carousel-item
-                    v-if="document.images?.length"
-                    :src="document.images"
-                    cover
+              <v-flex d-flex xs12 sm6>
+                <v-carousel
+                    height="250"
+                    :continuous="false"
+                    hide-delimiters
                 >
-                  <v-rating
-                      v-model="document.rating"
-                      active-color="yellow-accent-4"
-                      color="red"
-                      size="18"
-                      half-increments
-                      hover
-                  ></v-rating>
-                </v-carousel-item>
-                <v-carousel-item
-                    v-else
-                    cover
-                    :src="require('@/assets/No_Image_Available.jpg')"
-                >
-                  <v-rating
-                      v-model="document.rating"
-                      active-color="yellow-accent-4"
-                      color="red"
-                      size="18"
-                      half-increments
-                      hover
-                  ></v-rating>
-                </v-carousel-item>
-              </v-carousel>
-            </v-flex>
+                  <v-carousel-item
+                      v-if="document.images?.length"
+                      :src="document.images"
+                      cover
+                  >
+                    <v-rating
+                        v-model="document.rating"
+                        active-color="yellow-accent-4"
+                        color="red"
+                        size="18"
+                        half-increments
+                        hover
+                    ></v-rating>
+                  </v-carousel-item>
+                  <v-carousel-item
+                      v-else
+                      cover
+                      :src="require('@/assets/No_Image_Available.jpg')"
+                  >
+                    <v-rating
+                        v-model="document.rating"
+                        active-color="yellow-accent-4"
+                        color="red"
+                        size="18"
+                        half-increments
+                        hover
+                    ></v-rating>
+                  </v-carousel-item>
+                </v-carousel>
+              </v-flex>
 
-            <v-flex d-flex xs12 md6>
-              <v-layout row wrap>
+              <v-flex d-flex xs12 md6>
+                <v-layout row wrap>
 
-                <v-flex d-flex >
-                  <v-card border flat>
-                    <v-card-title>{{ document.name }}</v-card-title>
-                    <v-card-subtitle class="primary--text">{{ document.category }}</v-card-subtitle>
-                    <v-card-text>{{ document.description.slice(0, 100) }}</v-card-text>
-                  </v-card>
-                </v-flex>
+                  <v-flex d-flex>
+                    <v-card border flat>
+                      <v-card-title>{{ document.name }}</v-card-title>
+                      <v-card-subtitle class="primary--text">{{ document.category }}</v-card-subtitle>
+                      <v-card-text>{{ document.description.slice(0, 165) }}</v-card-text>
+                    </v-card>
+                  </v-flex>
 
-                <v-flex d-flex align-self-end>
-                  <div class="pl-4">
-                  <v-btn small text >
-                    <v-icon color="black"> mdi-star-outline</v-icon>
-                  </v-btn>
-                  <v-btn small text >
-                    <v-icon color="black"> mdi-content-save-outline</v-icon>
-                  </v-btn>
-                  <v-btn small text >
-                    <v-icon color="black"> mdi-book-open-outline</v-icon>
-                  </v-btn>
-                  </div>
-                </v-flex>
+                  <v-flex d-flex align-self-end>
+                    <div class="pl-4">
+                      <v-btn small text>
+                        <v-icon> mdi-star-outline</v-icon>
+                      </v-btn>
+                      <v-btn small text>
+                        <v-icon> mdi-content-save-outline</v-icon>
+                      </v-btn>
+                      <v-btn small text>
+                        <v-icon> mdi-book-open-outline</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-flex>
 
-              </v-layout>
-            </v-flex>
+                </v-layout>
+              </v-flex>
 
-          </v-layout>
-        </v-container>
+            </v-layout>
+          </v-container>
         </v-sheet>
       </v-col>
     </v-row>
@@ -123,7 +122,37 @@ export default {
   name: 'cardView',
 
   data: () => ({
-    lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
+    loaded: false,
+    loading: false,
+    search: '',
+    filterItems: [
+      {
+        id: 1,
+        name: 'relevance',
+        label: 'по релевантности',
+      },
+      {
+        id: 2,
+        name: 'rating',
+        label: 'по рейтингу',
+      },
+      {
+        id: 3,
+        name: 'size',
+        label: 'по размеру',
+      },
+      {
+        id: 4,
+        name: 'name',
+        label: 'по имени',
+      },
+      {
+        id: 5,
+        name: 'data',
+        label: 'по дате',
+      },
+    ],
+    filterModel: null,
     p: {
       start: 0,
       step: 0,
@@ -136,7 +165,7 @@ export default {
     documents: [
       {
         name: 'Frozen Yogurt',
-        description: 'Editor’s Pick: With Mother’s Day less than a month away, I found this book to be a timely meditation on modern motherhood. ',
+        description: 'Editor’s Pick: With Mother’s Day less than a month away, I found this book to be a timely meditation on modern motherhood. Editor’s Pick: With Mother’s Day less than a month away, I found this book to be a timely meditation on modern motherhood.',
         category: 'Художественная литература',
         type: 'PDF',
         size: 4520,
@@ -219,7 +248,19 @@ export default {
       }
     }
   },
-  methods: {},
+  methods: {
+    onClick () {
+      this.loading = true
+
+      setTimeout(() => {
+        this.loading = false
+        this.loaded = true
+      }, 2000)
+    },
+    onChange(entry) {
+      //console.log(entry)
+    },
+  },
 }
 
 
