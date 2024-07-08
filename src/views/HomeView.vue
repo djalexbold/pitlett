@@ -54,7 +54,7 @@
                   cols="auto"
                   md="2"
               >
-                <v-card class="pb-2" outlined>
+                <v-card height="100%" class="pb-2" outlined>
                   <v-img
                       height="120"
                       :src="item.images"
@@ -143,7 +143,7 @@
                   cols="auto"
                   md="2"
               >
-                <v-card class="pb-2" outlined>
+                <v-card height="100%" class="pb-2" outlined>
                   <v-img
                       height="120"
                       :src="item.images"
@@ -168,9 +168,6 @@
                   <v-card-actions>
                     <v-btn small text>
                       <v-icon dense> mdi-eye-outline</v-icon>
-                    </v-btn>
-                    <v-btn small @click="other = !other" text>
-                      <v-icon dense>mdi-file-edit-outline</v-icon>
                     </v-btn>
                     <v-btn small text>
                       <v-icon dense> mdi-content-save-outline</v-icon>
